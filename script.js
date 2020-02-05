@@ -29,6 +29,19 @@ alisha.electionResults[4] = 38;
 elaine.electionResults[43] = 11;
 alisha.electionResults[43] = 27;
 
+elaine.totalAllTheVotes();
+alisha.totalAllTheVotes();
+
+var winner = "???";
+
+if (elaine.totalVotes > alisha.totalVotes) {
+    winner = elaine.name;
+} else if (alisha.totalVotes > elaine.totalVotes) {
+    winner = alisha.name;
+} else {
+    winner = "DRAW";
+}
+
 var setStateResults = function(state) {
 
     theStates[state].winner = null;
@@ -43,19 +56,40 @@ var setStateResults = function(state) {
     } else {
         theStates[state].rgbColor = [11, 32, 57];
     }
+
+    var stateTable = document.getElementById("stateResults");
+    var header = stateTable.children[0].children[0];
+    var body = stateTable.children[1];
+    var stateName = header.children[0];
+    var stateAbbr = header.children[1];
+    var name1 = body.children[0].children[0];
+    var name2 = body.children[1].children[0];
+    var results1 = body.children[0].children[1];
+    var results2 = body.children[1].children[1];
+    var winnerName = body.children[2].children[1];
+
+    stateName.innerText = theStates[state].nameFull;
+    stateAbbr.innerText = theStates[state].nameAbbrev;
+
+    name1.innerText = elaine.name;
+    name2.innerText = alisha.name;
+
+    results1.innerText = elaine.electionResults[state];
+    results2.innerText = alisha.electionResults[state];
+
+    if (theStates[state].winner === null) {
+        winnerName.innerText = "Draw";
+    } else {
+        winnerName.innerText = theStates[state].winner.name;
+    }
+
 };
 
-elaine.totalAllTheVotes();
-alisha.totalAllTheVotes();
+var countryTable = document.getElementById("countryResults");
+var row = countryTable.children[0].children[0];
 
-var winner = "???";
-
-if (elaine.totalVotes > alisha.totalVotes) {
-    winner = elaine.name;
-} else if (alisha.totalVotes > elaine.totalVotes) {
-    winner = alisha.name;
-} else {
-    winner = "DRAW";
-}
-
-console.log("AND THE WINNER IS..." + winner + "!!!");
+row.children[0].innerText = elaine.name;
+row.children[1].innerText = elaine.totalVotes;
+row.children[2].innerText = alisha.name;
+row.children[3].innerText = alisha.totalVotes;
+row.children[5].innerText = winner;
